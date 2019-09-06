@@ -1,0 +1,10 @@
+numpy
+scipy
+requests
+loguru
+pillow
+Flask
+torch
+torchvision
+facenet_pytorch
+beautifulsoup4

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FaceSearch</title>
+    <style>
+        .query {
+        }
+
+        .query-img {
+            width: 10rem;
+        }
+
+        .result-row {
+            display: flex;
+            margin: 1rem;
+        }
+
+        .result-image {
+            width: 15rem;
+        }
+
+        .result-info {
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="/" method="get">
+            <select name="image_id" >
+                {% for image_id in image_ids %}
+                <option value={{ image_id }} >{{ image_id }}.jpg</option>
+                {% endfor %}
+            </select>
+            <button type="submit">送信</button>
+        </form>
+        <div class="query">
+            <p>
+                入力画像: <b>{{ query['image_id'] }}.jpg</b>
+            </p>
+            <img src="{{ url_for('static', filename=query['image_path']) }}" class="query-img" />
+        </div>
+
+        <div>
+            {% for r in result %}
+                <div class="result-row">
+                    <div>
+                        <img src="{{url_for('static', filename=r['image_path']) }}" class="result-image" />
+                    </div>
+                    <div class="result-info">
+                        <p>distance : {{ r['distance'] }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
