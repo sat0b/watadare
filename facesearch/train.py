@@ -2,6 +2,7 @@ import argparse
 import json
 import pathlib
 
+import os
 from PIL import Image
 from facenet_pytorch import MTCNN, InceptionResnetV1
 from loguru import logger
@@ -70,6 +71,8 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
+    if not os.path.exists(args.db_path):
+        os.makedirs(args.db_path)
     logger.info("Start to make {}".format(args.db_path))
     embeddings = train(args.image_path)
     save_db(embeddings, args.db_path)

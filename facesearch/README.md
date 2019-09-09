@@ -32,5 +32,5 @@ $ docker build -t facesearch .
 
 ## run docker image
 ```
-$ docker run -p 8080:8080 -it facesearch
+$ docker run -p 80:8080 -it facesearch
 ```
