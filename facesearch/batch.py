@@ -65,14 +65,14 @@ def save_db(embeddings, db_path):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--image-path', default='static/image')
-    parser.add_argument('--db-path', default='db/db.txt')
+    parser.add_argument('--db-path', default='db')
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
     if not os.path.exists(args.db_path):
-        os.makedirs(args.db_path)
+        os.mkdir(args.db_path)
     logger.info("Start to make {}".format(args.db_path))
     embeddings = train(args.image_path)
     save_db(embeddings, args.db_path)
