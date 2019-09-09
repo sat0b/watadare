@@ -55,4 +55,4 @@ if __name__ == "__main__":
     args = parse_args()
     embeddings = load_db(args.db_path)
     image_ids = sorted(embeddings.keys())
-    app.run(debug=False, host='0.0.0.0', port=80)
+    app.run(debug=False, host='0.0.0.0', port=8080)

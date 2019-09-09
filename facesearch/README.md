@@ -29,3 +29,8 @@ $ python3 server.py
 ```
 $ docker build -t facesearch .
 ```
+
+## run docker image
+```
+$ docker run -p 8080:8080 -it facesearch
+```
