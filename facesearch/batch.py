@@ -44,6 +44,7 @@ def get_embeddings(cropped_images):
             vector = tensor.detach().numpy()
             assert vector.shape == (1, 512)
             embeddings[image_id] = [float(val) for val in tensor.detach().numpy().flatten()]
+            logger.info("image_id: {} saved".format(image_id))
         except RuntimeError as e:
             logger.error("image_id: {}, {}".format(image_id, e))
     return embeddings
@@ -56,7 +57,7 @@ def train(image_path):
 
 
 def save_db(embeddings, db_path):
-    with open(db_path, 'w') as f:
+    with open(os.path.join(db_path, 'db.txt'), 'w') as f:
         for image_id, vector in embeddings.items():
             json_line = json.dumps({"image_id": image_id, "vector": vector})
             f.write(json_line + '\n')
