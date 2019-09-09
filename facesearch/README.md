@@ -12,17 +12,17 @@ googleの画像検索から画像をダウンロードしてくる
 $ python3 image_download.py 芸能人
 ```
 
-## train.py
+## batch.py
 画像から特徴ベクトルを作成し、jsonファイルにdumpする
 ```
-$ python3 train.py
+$ python3 batch.py
 ```
 
-## server.py
+## app.py
 類似顔画像検索のデモツール
 
 ```
-$ python3 server.py
+$ python3 app.py
 ```
 
 ## build docker image
