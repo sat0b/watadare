@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 
 COPY index_builder.py /app
 
-CMD ["python", "batch.py"]
+CMD ["python", "index_builder.py"]
