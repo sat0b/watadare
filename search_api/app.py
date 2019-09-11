@@ -64,6 +64,7 @@ if __name__ == "__main__":
     os.remove(db_timestamp_path)
     logger.info("Remove {}".format(db_timestamp_path))
 
-    embeddings = load_db(args.db_path)
+    db_file_path = os.path.join(args.db_path, 'db.txt')
+    embeddings = load_db(db_file_path)
     image_ids = sorted(embeddings.keys())
     app.run(debug=False, host='0.0.0.0', port=8080)
