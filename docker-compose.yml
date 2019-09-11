@@ -14,3 +14,5 @@ search_api:
   volumes:
     - /opt/watadare/image:/app/image
     - /opt/watadare/db:/app/db
+  ports:
+    - 8080:8080
