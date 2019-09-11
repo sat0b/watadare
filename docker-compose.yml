@@ -1,14 +1,16 @@
 image_downloader:
   build: image_downloader
   volumes:
-    - /opt/watadare:/app/
+    - /opt/watadare/image:/app/image
 
 index_builder:
   build: index_builder
   volumes:
-    - /opt/watadare:/app/
+    - /opt/watadare/image:/app/image
+    - /opt/watadare/db:/app/db
 
 search_api:
   build: search_api
   volumes:
-    - /opt/watadare/:/app/
+    - /opt/watadare/image:/app/image
+    - /opt/watadare/db:/app/db
