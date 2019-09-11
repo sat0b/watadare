@@ -12,7 +12,7 @@ index_builder:
 search_api:
   build: search_api
   volumes:
-    - /opt/watadare/image:/app/image
+    - /opt/watadare/image:/app/static/image
     - /opt/watadare/db:/app/db
   ports:
     - 8080:8080
