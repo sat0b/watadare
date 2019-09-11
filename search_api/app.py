@@ -57,12 +57,12 @@ def index():
 if __name__ == "__main__":
     args = parse_args()
 
-    db_timestampe_path = os.path.join(args.db_path, 'timestamp.txt')
-    while not os.path.exists(db_timestampe_path):
+    db_timestamp_path = os.path.join(args.db_path, 'timestamp.txt')
+    while not os.path.exists(db_timestamp_path):
         logger.info("index_builder hasn't finished..")
         time.sleep(10)
-    os.remove(db_timestampe_path)
-    logger.info("Remove {}".format(db_timestampe_path))
+    os.remove(db_timestamp_path)
+    logger.info("Remove {}".format(db_timestamp_path))
 
     embeddings = load_db(args.db_path)
     image_ids = sorted(embeddings.keys())
