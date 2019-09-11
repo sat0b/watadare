@@ -8,8 +8,7 @@ index_builder:
   volumes:
     - /opt/watadare/image:/app/image
 
-
-facesearch:
-  build: index_builder
+search_api:
+  build: search_api
   volumes:
     - /opt/watadare/image:/app/image
