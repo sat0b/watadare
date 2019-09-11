@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import datetime
 
 import bs4
 import requests
@@ -29,8 +30,8 @@ def download_image(query, save_directory):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('query', default="芸能人")
-    parser.add_argument('--save-directory', default="static/image")
+    parser.add_argument('--query', default="芸能人")
+    parser.add_argument('--save-directory', default="image")
     return parser.parse_args()
 
 
@@ -39,3 +40,7 @@ if __name__ == "__main__":
     if not os.path.exists(args.save_directory):
         os.makedirs(args.save_directory)
     download_image(args.query, args.save_directory)
+
+    with open(os.path.join(args.save_directory, 'timestamp.txt'), 'w') as f:
+        now = int(datetime.datetime.now().timestamp())
+        f.write(str(now))

@@ -1,0 +1,15 @@
+image_downloader:
+  build: image_downloader
+  volumes:
+    - /opt/watadare/image:/app/image
+
+index_builder:
+  build: index_builder
+  volumes:
+    - /opt/watadare/image:/app/image
+
+
+facesearch:
+  build: index_builder
+  volumes:
+    - /opt/watadare/image:/app/image

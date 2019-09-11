@@ -3,6 +3,10 @@ import json
 import pathlib
 
 import os
+
+import time
+
+import datetime
 from PIL import Image
 from facenet_pytorch import MTCNN, InceptionResnetV1
 from loguru import logger
@@ -65,7 +69,7 @@ def save_db(embeddings, db_path):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image-path', default='static/image')
+    parser.add_argument('--image-path', default='image')
     parser.add_argument('--db-path', default='db')
     return parser.parse_args()
 
@@ -74,7 +78,21 @@ if __name__ == "__main__":
     args = parse_args()
     if not os.path.exists(args.db_path):
         os.mkdir(args.db_path)
+
+    image_timestamp_path = os.path.join(args.image_path, 'timestamp.txt')
+    while not os.path.exists(image_timestamp_path):
+        logger.info("image_downloader hasn't finished..")
+        time.sleep(10)
+
     logger.info("Start to make {}".format(args.db_path))
     embeddings = train(args.image_path)
     save_db(embeddings, args.db_path)
     logger.info("Save {}".format(args.db_path))
+
+    os.remove(image_timestamp_path)
+    logger.info("Remove {}".format(image_timestamp_path))
+
+    db_timestamp_path = os.path.join(args.db_path, 'timestamp.txt')
+    with open(db_timestamp_path, 'w') as f:
+        now = int(datetime.datetime.now().timestamp())
+        f.write(str(now))
