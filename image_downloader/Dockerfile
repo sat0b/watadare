@@ -5,6 +5,6 @@ COPY requirements.txt /app
 
 RUN pip install -r requirements.txt
 
-COPY image_download.py /app
+COPY image_downloader.py /app
 
 CMD ["python", "image_download.py"]
