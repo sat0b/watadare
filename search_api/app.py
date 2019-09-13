@@ -1,8 +1,8 @@
-from environs import Env
 import json
 import os
 import time
 
+from environs import Env
 from flask import Flask, render_template, request
 from loguru import logger
 from scipy import spatial

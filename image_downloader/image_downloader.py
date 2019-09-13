@@ -1,10 +1,10 @@
-from environs import Env
+import datetime
 import json
 import os
-import datetime
 
 import bs4
 import requests
+from environs import Env
 from loguru import logger
 
 

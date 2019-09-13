@@ -1,13 +1,11 @@
-from environs import Env
+import datetime
 import json
-import pathlib
-
 import os
-
+import pathlib
 import time
 
-import datetime
 from PIL import Image
+from environs import Env
 from facenet_pytorch import MTCNN, InceptionResnetV1
 from loguru import logger
 
