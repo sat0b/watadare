@@ -1,4 +1,4 @@
-import argparse
+from environs import Env
 import json
 import os
 import time
@@ -37,12 +37,6 @@ def load_db(db_name):
     return embeddings
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--db-path', default='db')
-    return parser.parse_args()
-
-
 @app.route("/")
 def index():
     query_image_id = request.args.get('image_id', default=1, type=int)
@@ -55,16 +49,15 @@ def index():
 
 
 if __name__ == "__main__":
-    args = parse_args()
-
-    db_timestamp_path = os.path.join(args.db_path, 'timestamp.txt')
+    env = Env()
+    db_timestamp_path = env("DB_TIMESTAMP_PATH")
     while not os.path.exists(db_timestamp_path):
         logger.info("index_builder hasn't finished..")
         time.sleep(10)
     os.remove(db_timestamp_path)
     logger.info("Remove {}".format(db_timestamp_path))
 
-    db_file_path = os.path.join(args.db_path, 'db.txt')
+    db_file_path = env("DB_FILE_PATH")
     embeddings = load_db(db_file_path)
     image_ids = sorted(embeddings.keys())
     app.run(debug=False, host='0.0.0.0', port=8080)

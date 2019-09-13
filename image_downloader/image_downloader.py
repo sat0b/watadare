@@ -1,4 +1,4 @@
-import argparse
+from environs import Env
 import json
 import os
 import datetime
@@ -28,19 +28,16 @@ def download_image(query, save_directory):
             logger.warning("skip {}, {}".format(url, e))
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--query', default="芸能人")
-    parser.add_argument('--save-directory', default="image")
-    return parser.parse_args()
-
-
 if __name__ == "__main__":
-    args = parse_args()
-    if not os.path.exists(args.save_directory):
-        os.makedirs(args.save_directory)
-    download_image(args.query, args.save_directory)
+    env = Env()
+    save_directory = env('SAVE_DIRECTORY')
+    if not os.path.exists(save_directory):
+        os.makedirs(save_directory)
 
-    with open(os.path.join(args.save_directory, 'timestamp.txt'), 'w') as f:
+    query = env("QUERY")
+    download_image(query, save_directory)
+
+    image_timestamp_path = env("IMAGE_TIMESTAMP_PATH")
+    with open(image_timestamp_path, 'w') as f:
         now = int(datetime.datetime.now().timestamp())
         f.write(str(now))

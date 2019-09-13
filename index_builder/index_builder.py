@@ -1,4 +1,4 @@
-import argparse
+from environs import Env
 import json
 import pathlib
 
@@ -54,7 +54,7 @@ def get_embeddings(cropped_images):
     return embeddings
 
 
-def train(image_path):
+def make_index(image_path):
     images = load_images(image_path)
     cropped_images = crop_images(images)
     return get_embeddings(cropped_images)
@@ -67,32 +67,29 @@ def save_db(embeddings, db_path):
             f.write(json_line + '\n')
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--image-path', default='image')
-    parser.add_argument('--db-path', default='db')
-    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    if not os.path.exists(args.db_path):
-        os.mkdir(args.db_path)
+    env = Env()
+    db_path = env("DB_PATH")
+    if not os.path.exists(db_path):
+        os.mkdir(db_path)
 
-    image_timestamp_path = os.path.join(args.image_path, 'timestamp.txt')
+    image_path = env("IMAGE_PATH")
+    image_timestamp_path = env("IMAGE_TIMESTAMP_PATH")
     while not os.path.exists(image_timestamp_path):
         logger.info("image_downloader hasn't finished..")
         time.sleep(10)
 
-    logger.info("Start to make {}".format(args.db_path))
-    embeddings = train(args.image_path)
-    save_db(embeddings, args.db_path)
-    logger.info("Save {}".format(args.db_path))
+    logger.info("Start to make {}".format(db_path))
+    embeddings = make_index(image_path)
+    save_db(embeddings, db_path)
+    logger.info("Save {}".format(db_path))
 
     os.remove(image_timestamp_path)
     logger.info("Remove {}".format(image_timestamp_path))
 
-    db_timestamp_path = os.path.join(args.db_path, 'timestamp.txt')
+    db_timestamp_path = os.path.join(db_path, 'timestamp.txt')
     with open(db_timestamp_path, 'w') as f:
         now = int(datetime.datetime.now().timestamp())
         f.write(str(now))
